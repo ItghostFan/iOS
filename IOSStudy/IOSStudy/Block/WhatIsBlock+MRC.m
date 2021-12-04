@@ -35,8 +35,28 @@
         NSLog(@"Malloc block invoke value:%@!", stackValue);
         return 0;
     } copy];
-    mallocBlock(123);
+    mallocBlock(3);
+    
     [mallocBlock release];
+    
+    // MARK: Tips 7 MRC __unsafe_unretained 处理循环引用
+    BlockRetainer *retainer = [BlockRetainer new];
+    __unsafe_unretained typeof(retainer) unsafeUnretainedRetainer = retainer;
+    retainer.block = [^(int value) {
+        NSLog(@"Unsafe Unretained block invoke value:%@!", unsafeUnretainedRetainer);
+        return 0;
+    } copy];
+    retainer.block(7);
+    
+    // MARK: Tips 8 MRC __block 处理循环引用
+    __block typeof(retainer) blockedRetainer = retainer;
+    retainer.block = [^(int value) {
+        NSLog(@"Blocked block invoke value:%@!", blockedRetainer);
+        return 0;
+    } copy];
+    retainer.block(8);
+
+    [retainer release];
 }
 
 @end

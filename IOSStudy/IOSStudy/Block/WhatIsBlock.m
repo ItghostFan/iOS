@@ -9,9 +9,6 @@
 
 #import "WhatIsBlock+MRC.h"
 
-@interface WhatIsBlock ()
-@end
-
 @implementation WhatIsBlock
 
 - (instancetype)init {
@@ -26,6 +23,10 @@
         [self mallocBlockCaseMrc];
     }
     return self;
+}
+
+- (void)dealloc {
+    NSLog(@"%@ %s", NSStringFromClass(self.class), __FUNCTION__);
 }
 
 - (void)globalBlockCase {
