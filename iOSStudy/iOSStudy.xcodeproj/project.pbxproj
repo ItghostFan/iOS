@@ -20,6 +20,7 @@
 		78DABA08275A85BF008462A5 /* WhatIsBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DABA07275A85BF008462A5 /* WhatIsBlock.m */; };
 		78DABA0C275B8495008462A5 /* WhatIsBlock+MRC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DABA0B275B8495008462A5 /* WhatIsBlock+MRC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		78DABA0F275BB706008462A5 /* BlockRetainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DABA0E275BB706008462A5 /* BlockRetainer.m */; };
+		78DCBBEB283CBF61009F306A /* HttpUrlProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DCBBEA283CBF61009F306A /* HttpUrlProtocol.m */; };
 		78ED37D527624E7800D4F4C4 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 78ED37D427624E7800D4F4C4 /* CustomButton.m */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,8 @@
 		78DABA0B275B8495008462A5 /* WhatIsBlock+MRC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WhatIsBlock+MRC.m"; sourceTree = "<group>"; };
 		78DABA0D275BB706008462A5 /* BlockRetainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BlockRetainer.h; path = ../../../iOSStudy/iOSStudy/Block/BlockRetainer.h; sourceTree = "<group>"; };
 		78DABA0E275BB706008462A5 /* BlockRetainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BlockRetainer.m; path = ../../../iOSStudy/iOSStudy/Block/BlockRetainer.m; sourceTree = "<group>"; };
+		78DCBBE9283CBF61009F306A /* HttpUrlProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpUrlProtocol.h; sourceTree = "<group>"; };
+		78DCBBEA283CBF61009F306A /* HttpUrlProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HttpUrlProtocol.m; sourceTree = "<group>"; };
 		78ED37D327624E7800D4F4C4 /* CustomButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomButton.h; path = IOSStudy/UIKit/Custom/CustomButton.h; sourceTree = SOURCE_ROOT; };
 		78ED37D427624E7800D4F4C4 /* CustomButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CustomButton.m; path = IOSStudy/UIKit/Custom/CustomButton.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -117,6 +120,8 @@
 			children = (
 				7877273C279D3AD20029F590 /* HttpCase.h */,
 				7877273D279D3AD20029F590 /* HttpCase.m */,
+				78DCBBE9283CBF61009F306A /* HttpUrlProtocol.h */,
+				78DCBBEA283CBF61009F306A /* HttpUrlProtocol.m */,
 			);
 			path = Http;
 			sourceTree = "<group>";
@@ -340,6 +345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78ED37D527624E7800D4F4C4 /* CustomButton.m in Sources */,
+				78DCBBEB283CBF61009F306A /* HttpUrlProtocol.m in Sources */,
 				78DAB9D8275A855F008462A5 /* ViewController.m in Sources */,
 				78DAB9D2275A855F008462A5 /* AppDelegate.m in Sources */,
 				78DABA0C275B8495008462A5 /* WhatIsBlock+MRC.m in Sources */,

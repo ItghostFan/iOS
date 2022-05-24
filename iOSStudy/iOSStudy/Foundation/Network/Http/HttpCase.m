@@ -7,7 +7,12 @@
 
 #import "HttpCase.h"
 
-@interface HttpCase () <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
+#import "HttpUrlProtocol.h"
+
+@interface HttpCase () <
+NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate,
+NSURLProtocolClient
+>
 @property (strong, nonatomic) NSURLSession *session;
 @property (strong, nonatomic) NSOperationQueue *sessionQueue;
 @end
@@ -17,9 +22,21 @@
 - (instancetype)init {
     if ([super init]) {
         self.sessionQueue = [NSOperationQueue new];
-        self.session = [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration delegate:self delegateQueue:self.sessionQueue];
+        
+        BOOL done = [NSURLProtocol registerClass:HttpUrlProtocol.class];
+        NSURLSessionConfiguration *configuration = NSURLSessionConfiguration.defaultSessionConfiguration.copy;
+        configuration.protocolClasses = @[HttpUrlProtocol.class];
+        self.session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:self.sessionQueue];
+        
+//        self.session = NSURLSession.sharedSession;
+//        NSURLSession.sharedSession.delegateQueue = self.sessionQueue;
+//        NSURLSession.sharedSession.delegate = self;
     }
     return self;
+}
+
+- (void)dealloc {
+    [NSURLProtocol unregisterClass:HttpUrlProtocol.class];
 }
 
 - (void)request {
@@ -76,41 +93,7 @@
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
                             didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
                               completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler {
-    // MARK: Tips Https Request 认证
-    
-    if (![challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
-        // MARK: Tips Https 没有认证
-        completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
-        return;
-    }
-    
-    NSString *domain = @"datatest.hiido.com";// task.originalRequest.allHTTPHeaderFields[@"host"];
-    NSMutableArray *policies = [NSMutableArray array];
-    [policies addObject:(__bridge_transfer id)SecPolicyCreateSSL(true, (__bridge CFStringRef)domain)];
-    SecTrustSetPolicies(challenge.protectionSpace.serverTrust, (__bridge CFArrayRef)policies);
-
-    SecTrustResultType trustRsult;
-    if (@available(iOS 13.0, *)) {
-        CFErrorRef errorRef;
-        if (!SecTrustEvaluateWithError(challenge.protectionSpace.serverTrust, &errorRef)) {
-            completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
-            CFRelease(errorRef);
-            return;
-        }
-    } else {
-        if (noErr != SecTrustEvaluate(challenge.protectionSpace.serverTrust, &trustRsult)) {
-            if (trustRsult != kSecTrustResultUnspecified && trustRsult != kSecTrustResultProceed) {
-                completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
-            }
-            return;
-        }
-    }
-    NSURLCredential *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
-    if (credential) {
-        completionHandler(NSURLSessionAuthChallengeUseCredential, credential);
-    } else {
-        completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, credential);
-    }
+    NSLog(@"%s", __FUNCTION__);
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
@@ -173,6 +156,32 @@ didFinishDownloadingToURL:(NSURL *)location {
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
                                       didResumeAtOffset:(int64_t)fileOffset
                                      expectedTotalBytes:(int64_t)expectedTotalBytes {
+}
+
+#pragma mark - NSURLProtocolClient
+
+- (void)URLProtocol:(NSURLProtocol *)protocol wasRedirectedToRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse {
+}
+
+- (void)URLProtocol:(NSURLProtocol *)protocol cachedResponseIsValid:(NSCachedURLResponse *)cachedResponse {
+}
+
+- (void)URLProtocol:(NSURLProtocol *)protocol didReceiveResponse:(NSURLResponse *)response cacheStoragePolicy:(NSURLCacheStoragePolicy)policy {
+}
+
+- (void)URLProtocol:(NSURLProtocol *)protocol didLoadData:(NSData *)data {
+}
+
+- (void)URLProtocolDidFinishLoading:(NSURLProtocol *)protocol {
+}
+
+- (void)URLProtocol:(NSURLProtocol *)protocol didFailWithError:(NSError *)error {
+}
+
+- (void)URLProtocol:(NSURLProtocol *)protocol didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+}
+
+- (void)URLProtocol:(NSURLProtocol *)protocol didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
 }
 
 @end

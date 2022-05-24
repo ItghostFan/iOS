@@ -10,6 +10,7 @@
 #import "WhatIsBlock.h"
 
 #import "HttpCase.h"
+#import "HttpUrlProtocol.h"
 
 @interface ViewController ()
 @property (strong, nonatomic) HttpCase *httpCase;
@@ -22,9 +23,12 @@
     // Do any additional setup after loading the view.
     NSLog(@"%@", [WhatIsBlock new]);
     self.httpCase = [HttpCase new];
-    for (NSInteger index = 0; index < 1000; ++index) {
+    for (NSInteger index = 0; index < 1; ++index) {
         [self.httpCase request];
     }
+}
+
+- (void)dealloc {
 }
 
 
