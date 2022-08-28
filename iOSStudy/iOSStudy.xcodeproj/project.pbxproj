@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7842AC0A28BBBD3200EEC07B /* ServerThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 7842AC0928BBBD3200EEC07B /* ServerThread.m */; };
+		7842AC0D28BBBD4500EEC07B /* ClientThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 7842AC0C28BBBD4500EEC07B /* ClientThread.m */; };
 		7877273E279D3AD20029F590 /* HttpCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7877273D279D3AD20029F590 /* HttpCase.m */; };
 		78DAB9D2275A855F008462A5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DAB9D1275A855F008462A5 /* AppDelegate.m */; };
 		78DAB9D5275A855F008462A5 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DAB9D4275A855F008462A5 /* SceneDelegate.m */; };
@@ -42,6 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7842AC0828BBBD3200EEC07B /* ServerThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerThread.h; sourceTree = "<group>"; };
+		7842AC0928BBBD3200EEC07B /* ServerThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServerThread.m; sourceTree = "<group>"; };
+		7842AC0B28BBBD4500EEC07B /* ClientThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClientThread.h; sourceTree = "<group>"; };
+		7842AC0C28BBBD4500EEC07B /* ClientThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClientThread.m; sourceTree = "<group>"; };
 		7877273C279D3AD20029F590 /* HttpCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpCase.h; sourceTree = "<group>"; };
 		7877273D279D3AD20029F590 /* HttpCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HttpCase.m; sourceTree = "<group>"; };
 		78DAB9CD275A855F008462A5 /* iOSStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,9 +105,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7842AC0728BBBD0C00EEC07B /* Runloop */ = {
+			isa = PBXGroup;
+			children = (
+				7842AC0828BBBD3200EEC07B /* ServerThread.h */,
+				7842AC0928BBBD3200EEC07B /* ServerThread.m */,
+				7842AC0B28BBBD4500EEC07B /* ClientThread.h */,
+				7842AC0C28BBBD4500EEC07B /* ClientThread.m */,
+			);
+			path = Runloop;
+			sourceTree = "<group>";
+		};
 		78772739279D39050029F590 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				7842AC0728BBBD0C00EEC07B /* Runloop */,
 				7877273A279D39C30029F590 /* Network */,
 			);
 			path = Foundation;
@@ -346,7 +364,9 @@
 			files = (
 				78ED37D527624E7800D4F4C4 /* CustomButton.m in Sources */,
 				78DCBBEB283CBF61009F306A /* HttpUrlProtocol.m in Sources */,
+				7842AC0A28BBBD3200EEC07B /* ServerThread.m in Sources */,
 				78DAB9D8275A855F008462A5 /* ViewController.m in Sources */,
+				7842AC0D28BBBD4500EEC07B /* ClientThread.m in Sources */,
 				78DAB9D2275A855F008462A5 /* AppDelegate.m in Sources */,
 				78DABA0C275B8495008462A5 /* WhatIsBlock+MRC.m in Sources */,
 				78DABA08275A85BF008462A5 /* WhatIsBlock.m in Sources */,
