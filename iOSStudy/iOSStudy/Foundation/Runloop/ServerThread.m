@@ -8,14 +8,15 @@
 #import "ServerThread.h"
 
 @interface ServerThread () <NSPortDelegate>
-@property NSMessagePort *clientPort;
-@property NSMessagePort *serverPort;
+@property NSPort *clientPort;
+@property NSPort *serverPort;
 @end
 
 @implementation ServerThread
 
-- (instancetype)initWithClientPort:(NSMessagePort *)clientPort serverPort:(NSMessagePort *)serverPort {
+- (instancetype)initWithClientPort:(NSMachPort *)clientPort serverPort:(NSMachPort *)serverPort {
     if (self = [self initWithTarget:self selector:@selector(worker:) object:nil]) {
+        self.name = @"ServerThread";
         self.serverPort = serverPort;
         self.clientPort = clientPort;
     }
@@ -25,10 +26,11 @@
 #pragma mark - Private
 
 - (void)worker:(id)context {
-    [NSRunLoop.currentRunLoop run];
-    [NSRunLoop.currentRunLoop addPort:self.serverPort forMode:NSDefaultRunLoopMode];
     self.serverPort.delegate = self;
+    [NSRunLoop.currentRunLoop addPort:self.serverPort forMode:NSDefaultRunLoopMode];
     while (!self.isCancelled) {
+        if (![NSRunLoop.currentRunLoop runMode:NSDefaultRunLoopMode beforeDate:NSDate.distantFuture]) {
+        }
     }
     [NSRunLoop.currentRunLoop removePort:self.serverPort forMode:NSDefaultRunLoopMode];
 }

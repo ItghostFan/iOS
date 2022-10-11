@@ -19,7 +19,10 @@
 @property (strong, nonatomic) ServerThread *serverThread;
 @property (strong, nonatomic) ClientThread *clientThread;
 @property (weak, nonatomic) IBOutlet UIButton *sendToClientButton;
+@property (weak, nonatomic) IBOutlet UIButton *runOnServerThreadButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendToServerButton;
+@property (weak, nonatomic) IBOutlet UIButton *exitServerThreadButton;
+@property (weak, nonatomic) IBOutlet UIButton *exitClientThreadButton;
 @end
 
 @implementation ViewController
@@ -32,20 +35,30 @@
     for (NSInteger index = 0; index < 1; ++index) {
         [self.httpCase request];
     }
-    NSMessagePort *clientPort = [NSMessagePort new];
-    NSMessagePort *serverPort = [NSMessagePort new];
+    NSMachPort *clientPort = [NSMachPort new];
+    NSMachPort *serverPort = [NSMachPort new];
     self.serverThread = [[ServerThread alloc] initWithClientPort:clientPort serverPort:serverPort];
+    [self.serverThread start];
     self.clientThread = [[ClientThread alloc] initWithServerPort:serverPort clientPort:clientPort];
-    [self.sendToClientButton addTarget:self action:@selector(OnSendToClient:) forControlEvents:UIControlEventTouchUpInside];
-    [self.sendToServerButton addTarget:self action:@selector(OnSendToServer:) forControlEvents:UIControlEventTouchUpInside];
+    [self.clientThread start];
+    [self.sendToClientButton addTarget:self action:@selector(onSendToClient:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sendToServerButton addTarget:self action:@selector(onSendToServer:) forControlEvents:UIControlEventTouchUpInside];
+    [self.runOnServerThreadButton addTarget:self action:@selector(onRunOnServerThread:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)OnSendToClient:(id)sender {
+- (void)onSendToClient:(id)sender {
     [self.serverThread sendMessage:@"Message Come From Server"];
 }
 
-- (void)OnSendToServer:(id)sender {
+- (void)onSendToServer:(id)sender {
     [self.clientThread sendMessage:@"Message Come From Client"];
+}
+
+- (void)onRunOnServerThread:(id)sender {
+    [self performSelector:@selector(runOnServerThread) onThread:self.serverThread withObject:nil waitUntilDone:YES];
+}
+
+- (void)runOnServerThread {
 }
 
 - (void)dealloc {

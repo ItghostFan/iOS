@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ServerThread : NSThread
 
-- (instancetype)initWithClientPort:(NSMessagePort *)clientPort serverPort:(NSMessagePort *)serverPort;
+- (instancetype)initWithClientPort:(NSMachPort *)clientPort serverPort:(NSMachPort *)serverPort;
 - (void)sendMessage:(NSString *)message;
 
 @end
